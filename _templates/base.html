@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/_static/css/base.css">
+    <script src="/_static/js/base.js" defer></script>
+</head>
+<body>
+    {% include 'snippets/footer.html' %}
+    {% include 'snippets/header.html' %}
+    <div class="main">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

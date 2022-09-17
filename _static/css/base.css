@@ -1,0 +1,25 @@
+:root {
+    --main-background-color: #F2F2F2;
+    --dark-background-color: #A2A2A2;
+    --secondary-text-color: #808080;
+    --light-primary-text-color: #0080ff
+}
+
+.main {
+    min-height: 100vh;
+    height: 100%;
+}
+
+head {
+    font-weight: 380;
+}
+
+footer {
+    font-weight: 380;
+}
+
+body {
+    font-weight: 380;
+    background-color: var(--main-background-color);
+    
+}
