@@ -40,12 +40,9 @@
             <div class="bg-white rounded-top">
                 <hr class="m-0 text-secondary">
                 <div class="d-flex align-items-center pt-2 pb-2 mx-2">
-                    <textarea name="" style="border: none; resize: none; outline: none; width: 90%">SIEMA</textarea>
-                    <div class="d-flex justify-content-end me-2" style="width: 10%">
-                        <button class="btn btn-primary border-0">
-                            <i class="fa-solid fa-paper-plane fs-2"></i>
-                        </button>
-                    </div>
+                    <form id="form" action="">
+                        <input type="text" name="message">
+                    </form>
                 </div>
             </div>
         </div>
@@ -53,5 +50,25 @@
         <div class="col">
 
         </div>
+
+        <script type="text/javascript">
+            let url = `ws://${window.location.host}/ws/socket-server/`
+            const chatSocket = new WebSocket(url)
+
+            chatSocket.onmessage = function(e) {
+                let data = JSON.parse(e.data)
+                console.log('Data:', data)
+            }
+
+            let form = document.getElementById('form')
+            form.addEventListener('submit', e => {
+                e.preventDefault()
+                let message = e.target.message.value
+                chatSocket.send(JSON.stringify({
+                    'message': message
+                }))
+                form.reset()
+            })
+        </script>
     </div>
 {% endblock content %}

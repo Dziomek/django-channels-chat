@@ -17,11 +17,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.conf import settings
-from personal.views import home_screen_view
+from personal.views import home_view
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home_screen_view, name='home')
+    path('', home_view, name='home')
 ]
 
 if settings.DEBUG:
