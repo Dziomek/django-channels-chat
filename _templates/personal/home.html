@@ -19,6 +19,11 @@
                     </div>
                 </div>
                 <div class="mx-3" id="messages">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p>{{ message.content }}</p>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
             <div class="bg-white rounded-top">
