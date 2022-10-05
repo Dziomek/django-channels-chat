@@ -18,23 +18,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mx-3">
-                    <p> Heeej </p>
-                    <p> Hej </p>
-                    <p> Hej </p>
-                    <p> Hej </p>
-                    <p> Hej </p>
-                    <p> Hej </p>
-                    <p> Hej </p>
-                    <p> Hej </p>
-                    <p> Hej </p>
-                    <p> Hej </p>
-                    <p> Hej </p>
-                    <p> Hej </p>
-                    <p> Hej </p>
-                    <p> Hej </p>
-                    <p> Hej </p>
-                    <p> Hej </p>
+                <div class="mx-3" id="messages">
                 </div>
             </div>
             <div class="bg-white rounded-top">
@@ -48,20 +32,25 @@
         </div>
 
         <div class="col">
-
         </div>
 
         <script type="text/javascript">
             let url = `ws://${window.location.host}/ws/socket-server/`
-            const chatSocket = new WebSocket(url)
 
+            const chatSocket = new WebSocket(url)
             chatSocket.onmessage = function(e) {
                 let data = JSON.parse(e.data)
                 console.log('Data:', data)
+
+                if(data.type === 'chat') {
+                    let messages = document.getElementById('messages')
+                    messages.insertAdjacentHTML('beforeend',
+                        `<div><p>${data.message}</p></div>`)
+                }
             }
 
             let form = document.getElementById('form')
-            form.addEventListener('submit', e => {
+            form.addEventListener('submit', (e)=> {
                 e.preventDefault()
                 let message = e.target.message.value
                 chatSocket.send(JSON.stringify({

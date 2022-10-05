@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'personal',
     'channels',
+    'personal',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -73,6 +73,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_training_chat_app.wsgi.application'
 ASGI_APPLICATION = 'django_training_chat_app.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
