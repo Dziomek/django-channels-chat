@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "home_base.html" %}
 
 {% block content %}
     <div class="d-flex flex-row ">
@@ -21,7 +21,7 @@
                 <div class="mx-3" id="messages">
                     {% if messages %}
                         {% for message in messages %}
-                            <p>{{ message.content }}</p>
+                            <p><strong>{{ message.username }}</strong>: {{ message.content }}</p>
                         {% endfor %}
                     {% endif %}
                 </div>
@@ -40,8 +40,12 @@
         </div>
 
         <script type="text/javascript">
-            let url = `ws://${window.location.host}/ws/socket-server/`
+            let username = '{{ username }}'
+            let roomName = '{{ room_name }}'
+            console.log(roomName)
+            let url = `ws://${window.location.host}/chat/${username}/${roomName}/`
 
+            console.log(url)
             const chatSocket = new WebSocket(url)
             chatSocket.onmessage = function(e) {
                 let data = JSON.parse(e.data)
@@ -50,7 +54,7 @@
                 if(data.type === 'chat') {
                     let messages = document.getElementById('messages')
                     messages.insertAdjacentHTML('beforeend',
-                        `<div><p>${data.message}</p></div>`)
+                        `<div><p><strong>${data.username}</strong>${data.message}</p></div>`)
                 }
             }
 
