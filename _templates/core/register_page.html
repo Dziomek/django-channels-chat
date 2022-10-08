@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <form method="POST" class="w-25 px-4 mx-auto">
+        {% csrf_token %}
+
+    <div class="mb-5">
+        <label class="text-white">Username</label>
+        <input type="text" name="username" class="w-100 mt-2 px-4 py-2 rounded">
+    </div>
+    <div class="mb-5">
+        <label class="text-white">Password</label>
+        <input type="password" name="password1" class="w-100 mt-2 px-4 py-2 rounded">
+    </div>
+    <div class="mb-5">
+        <label class="text-white">Confirm password</label>
+        <input type="password" name="password2" class="w-100 mt-2 px-4 py-2 rounded">
+    </div>
+    {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="mb-5 p-4 rounded text-white" style="background-color: red">
+                    <p>{{ error|escape }}</p>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    <button class="px-5 py-3 rounded text-white" style="background-color: darkcyan">Submit</button>
+    </form>
+{% endblock %}
