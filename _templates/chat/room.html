@@ -1,0 +1,96 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <div class="d-flex flex-row ">
+        <div class="col">
+        </div>
+        <div class="col-lg-6">
+           <div class="bg-white mt-5 rounded-top overflow-auto" style="max-height: 65vh">
+                <div class="d-flex align-items-center justify-content-between p-3 sticky-top" style="background-color: azure">
+                    <p class="fs-2 my-auto mx-3 fw-bold">
+                        {{ room.name }}
+                    </p>
+                    <div class="d-flex justify-content-end">
+                        <div class="d-flex me-4 align-items-center">
+                            <i class="fa-solid fa-user fs-3"></i>
+                            <p class="fs-3 my-auto mx-2"> 1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mx-3" id="chat-messages">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p><strong>{{ message.user.username }}</strong>: {{ message.content }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="bg-white rounded-top">
+                <hr class="m-0 text-secondary">
+                <div class="d-flex align-items-center pt-2 pb-2 mx-2">
+                    <form id="form" action="">
+                        <input type="text" name="message" id="chat-message-input">
+                        <button id="chat-message-submit"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+
+    {{ room.slug|json_script:"json-roomname" }}
+    {{ request.user.username|json_script:"json-username" }}
+    <script>
+        const roomName = JSON.parse(document.getElementById("json-roomname").textContent)
+        const userName = JSON.parse(document.getElementById("json-username").textContent)
+
+        const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/' + roomName + '/')
+
+        chatSocket.onmessage = function(e) {
+            console.log('onmessage')
+
+            const data = JSON.parse(e.data)
+            if (data.message) {
+                let html = `<p><strong>${data.username}</strong>: ${data.message}</p>`
+                    document.querySelector('#chat-messages').innerHTML += html
+
+                scrollToBottom()
+            } else {
+                alert('The message was empty')
+            }
+        }
+        chatSocket.onclose = function(e) {
+            console.log('onclose')
+        }
+
+        //
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            e.preventDefault()
+            const messageInputDom = document.querySelector('#chat-message-input')
+            const message = messageInputDom.value
+
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'username': userName,
+                'room': roomName
+            }))
+
+            messageInputDom.value = ''
+
+            return false
+        }
+        //
+
+        function scrollToBottom() {
+            const objDiv = document.querySelector('#chat-messages')
+            objDiv.scrollTop = objDiv.scrollHeight;
+        }
+
+        scrollToBottom()
+    </script>
+{% endblock %}

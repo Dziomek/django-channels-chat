@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <div class="w-100 d-flex flex-wrap align-items-center">
+        {% for room in rooms %}
+            <div class="w-25 px-3 py-3">
+                <div class="p-4 bg-white shadow rounded text-center">
+                    <h2 class="mb-5 fs-0">{{ room.name }} {{ room.id }}</h2>
+                    <a href="{% url 'room' room.slug %}" class="px-5 py-3 block rounded text-white" style="background-color: darkcyan">Join</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
