@@ -22,9 +22,15 @@ def sign_in(request):
         password = request.POST['password']
         user = auth.authenticate(username=username, password=password)
         if user:
+            auth.login(request, user)
             return redirect('rooms')
 
     return render(request, 'core/start_page.html')
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('sign_in')
 
 
 def sign_up(request):
@@ -32,18 +38,19 @@ def sign_up(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            print('siemano')
             login(request, user)
 
             return redirect('rooms')
         else:
             form = SignUpForm()
-    return render(request, 'core/register_page.html')
+    return redirect('sign_in')
 
 
 def chat(request, username, room_name):
     messages = Message.objects.filter(room_name=room_name)
 
-    return render(request, 'core/home_page.html', {'messages': messages,
+    return render(request, 'core/room_page.html', {'messages': messages,
                                                        'username': username,
                                                        'room_name': room_name})
 

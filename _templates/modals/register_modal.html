@@ -1,0 +1,32 @@
+<form action="{% url 'sign_up' %}" method="POST">
+    {% csrf_token %}
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h2 class="modal-title" id="exampleModalLabel">Sign up to <strong>Chat App</strong></h2>
+                        <p class="text-muted fs-7">and socialize with others</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="username" class="form-control" id="floatingInput" placeholder="User name">
+                        <label for="floatingInput">User name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="password1" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="password2" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Confirm password</label>
+                    </div>
+                    <div class="g-recaptcha" data-sitekey="6LdxuMohAAAAAFrH8_U5Fu1wC41eDgC2XDow-i9U"></div>
+                    <a href=""><button type="submit" class="btn btn-secondary submit_btn w-100 my-4">Create new account</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
