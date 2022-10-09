@@ -1,14 +1,40 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-    <div class="w-100 d-flex flex-wrap align-items-center">
-        {% for room in rooms %}
-            <div class="w-25 px-3 py-3">
-                <div class="p-4 bg-white shadow rounded text-center">
-                    <h2 class="mb-5 fs-0">{{ room.name }} {{ room.id }}</h2>
-                    <a href="{% url 'room' room.slug %}" class="px-5 py-3 block rounded text-white" style="background-color: darkcyan">Join</a>
+    <div class="d-flex flex-row ">
+        <div class="col">
+        </div>
+        <div class="col-lg-6">
+            <div class="bg-white mt-5 rounded-top" style="max-height: 65vh">
+                <div class="d-flex align-items-center justify-content-between p-3 sticky-top rounded-top" style="background-color: darkcyan">
+                    <p class="fs-2 my-auto mx-3 fw-bold">
+                        Active rooms
+                    </p>
                 </div>
             </div>
-        {% endfor %}
+            <div class="bg-white rounded-top overflow-auto container" style="max-height: 60vh">
+                {% for room in rooms %}
+                <div class="d-flex rounded mt-4 mb-4 bg-white align-items-center">
+                    <i class="fa-solid fa-house m-0 fs-2 mx-3 text-warning"></i>
+                    <p class="my-auto fs-4 fw-bold">{{ room.name }}</p>
+                    <div style="width: 10%"></div>
+                    <i class="fa-solid fa-user mx-3 fs-2 text-primary"></i>
+                    <p class="my-auto fs-4">username</p>
+                    <div style="width: 10%"></div>
+                    <i class="fa-solid fa-users mx-3 fs-2 text-success"></i>
+                    <p class="my-auto fs-4">31</p>
+                    <div class="d-flex w-50 justify-content-end">
+                       <a href="{% url 'room' room.slug %}" class="text-decoration-none mx-3">
+                        <button class="btn btn-secondary" style="width: 150px">Join</button>
+                    </a>
+                    </div>
+                </div>
+                    <hr class="mb-0">
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col">
+        </div>
     </div>
 {% endblock %}
