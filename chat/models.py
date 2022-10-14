@@ -1,10 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
 class Room(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
+    password = models.CharField(max_length=50, null=True)
+    admin = models.ForeignKey(User, related_name='admin', on_delete=models.CASCADE, null=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Room, self).save(*args, **kwargs)
 
 
 class Message(models.Model):

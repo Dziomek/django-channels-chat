@@ -59,3 +59,16 @@ class ChatConsumer(AsyncWebsocketConsumer):
         room = Room.objects.get(slug=room)
 
         Message.objects.create(user=user, room=room, content=message)
+
+
+class RoomsConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        self.room_group_name = 'rooms'
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
+
+        await self.accept()
+
+

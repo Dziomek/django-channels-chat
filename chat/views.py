@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Room, Message
 
 
@@ -17,3 +17,13 @@ def room(request, slug):
 
     return render(request, 'chat/room.html', {'room': room_object, 'messages': messages})
 
+
+@login_required
+def create_room(request):
+    if request.method == 'POST':
+        room_name = request.POST['room_name']
+        password = request.POST['password']
+        room_object = Room(name=room_name, password=password, admin=request.user)
+        room_object.save()
+
+    return redirect('rooms')

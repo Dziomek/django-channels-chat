@@ -1,0 +1,26 @@
+<form action="{% url 'create_room' %}" method="POST">
+    {% csrf_token %}
+    <div class="modal fade" id="createRoomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h2 class="modal-title" id="exampleModalLabel">Create a new room</h2>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="room_name" class="form-control" id="floatingInput" placeholder="Room name">
+                        <label for="floatingInput">Room name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+                    <button id="create-room" type="submit" class="btn btn-secondary submit_btn w-100 my-4">Create new room</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

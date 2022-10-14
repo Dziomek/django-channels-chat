@@ -1,18 +1,26 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
+    {% include 'modals/create_room_modal.html' %}
     <div class="d-flex flex-row ">
-        <div class="col">
+        <div class="col">\
+
         </div>
         <div class="col-lg-6">
-            <div class="bg-white mt-5 rounded-top" style="max-height: 65vh">
+            <div class="bg-white mt-5 rounded-top" style="max-height: 55vh">
                 <div class="d-flex align-items-center justify-content-between p-3 sticky-top rounded-top" style="background-color: darkcyan">
                     <p class="fs-2 my-auto mx-3 fw-bold">
                         Active rooms
                     </p>
+                    <div class="d-flex justify-content-center align-items-center h-100">
+                        <a href="" data-bs-toggle="modal" data-bs-target="#createRoomModal">
+                            <i class="fa-solid fa-plus fs-1 text-warning"></i>
+                        </a>
+                        <p class="mx-3 my-auto text-white">Create new room</p>
+                    </div>
                 </div>
             </div>
-            <div class="bg-white rounded-top overflow-auto container" style="max-height: 60vh">
+            <div class="bg-white rounded-top overflow-auto container" style="max-height: 55vh">
                 {% for room in rooms %}
                 <div class="d-flex rounded mt-4 mb-4 bg-white align-items-center">
                     <i class="fa-solid fa-house m-0 fs-2 mx-3 text-warning"></i>
@@ -37,4 +45,15 @@
         <div class="col">
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/')
+
+        chatSocket.onmessage = function (e) {
+            console.log('onmessage')
+        }
+
+    </script>
 {% endblock %}
