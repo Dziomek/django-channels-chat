@@ -1,13 +1,18 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Room, Message
-
+from .utils import count_messages
 
 @login_required
 def rooms(request):
+    messages_counted = []
     room_objects = Room.objects.all()
+    for room_object in room_objects:
+        messages_counted.append(count_messages(room_object))
 
-    return render(request, 'chat/rooms.html', {'rooms': room_objects})
+    print(messages_counted)
+
+    return render(request, 'chat/rooms.html', {'rooms': room_objects, 'messages_counted': messages_counted})
 
 
 @login_required

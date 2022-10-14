@@ -7,7 +7,7 @@
 
         </div>
         <div class="col-lg-6">
-            <div class="bg-white mt-5 rounded-top" style="max-height: 55vh">
+            <div class="bg-white mt-5 rounded-top pb-3" style="max-height: 55vh">
                 <div class="d-flex align-items-center justify-content-between p-3 sticky-top rounded-top" style="background-color: darkcyan">
                     <p class="fs-2 my-auto mx-3 fw-bold">
                         Active rooms
@@ -35,19 +35,30 @@
                     </div>
                     <div class="col-2">
                         <div class="d-flex">
-                            <i class="fa-solid fa-users mx-3 fs-2 text-success"></i>
-                            <p class="my-auto fs-4">31</p>
+                            <i class="fa-solid fa-message mx-3 fs-2 text-success"></i>
+                            <p class="my-auto fs-4">
+                                {% for object in messages_counted %}
+                                    {% if room.name == object.room_name %}
+                                        {{ object.messages }}
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
                         </div>
                     </div>
                     <div class="col">
                       <div class="d-flex justify-content-end">
+                          {% if room.password %}
+                                <i class="fa-solid fa-lock mx-3 fs-2"></i>
+                            {% else %}
+                                <i class="fa-solid fa-lock-open mx-3 fs-2"></i>
+                          {% endif %}
                           <a href="{% url 'room' room.slug %}" class="text-decoration-none mx-3">
                              <button class="btn btn-secondary">Join</button>
                           </a>
                         </div>
                     </div>
                 </div>
-                    <hr class="mb-0">
+                    <hr class="">
                 {% endfor %}
             </div>
         </div>
