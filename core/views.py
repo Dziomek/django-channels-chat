@@ -1,4 +1,4 @@
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from .forms import SignUpForm
@@ -16,7 +16,8 @@ def sign_in(request):
         if user:
             auth.login(request, user)
             return redirect('rooms')
-
+        else:
+            messages.error(request, 'Invalid credentials. Please try again')
     return render(request, 'core/start_page.html')
 
 

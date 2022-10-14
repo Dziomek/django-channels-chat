@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Room, Message
@@ -55,4 +56,4 @@ def join_room(request, room_name):
         if password == room_object.password:
             return redirect('room', slug=room_object.slug)
 
-    return redirect('rooms')
+    return redirect('enter_room_password', room_name=room_name)
