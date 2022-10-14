@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from .models import Room, Message
 from .utils import count_messages
 
+
 @login_required
 def rooms(request):
     messages_counted = []
@@ -34,4 +35,24 @@ def create_room(request):
     return redirect('rooms')
 
 
+@login_required
+def enter_room_password(request, room_name):
+    room_object = Room.objects.get(name=room_name)
+    if not room_object.password:
+        return redirect('room', slug=room_object.slug)
 
+    return render(request, 'chat/enter_password.html', {'room_name': room_name})
+
+
+@login_required
+def join_room(request, room_name):
+    if request.method == 'POST':
+        room_object = Room.objects.get(name=room_name)
+        if not room_object.password:
+            return redirect('room', slug=room_object.slug)
+
+        password = request.POST['password']
+        if password == room_object.password:
+            return redirect('room', slug=room_object.slug)
+
+    return redirect('rooms')

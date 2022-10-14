@@ -3,7 +3,7 @@
 {% block content %}
     {% include 'modals/create_room_modal.html' %}
     <div class="d-flex flex-row">
-        <div class="col">\
+        <div class="col">
 
         </div>
         <div class="col-lg-6">
@@ -52,7 +52,7 @@
                             {% else %}
                                 <i class="fa-solid fa-lock-open mx-3 fs-2"></i>
                           {% endif %}
-                          <a href="{% url 'room' room.slug %}" class="text-decoration-none mx-3">
+                          <a href="{% url 'enter_room_password' room.name %}" class="text-decoration-none mx-3">
                              <button class="btn btn-secondary">Join</button>
                           </a>
                         </div>
