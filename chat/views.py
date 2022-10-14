@@ -27,3 +27,6 @@ def create_room(request):
         room_object.save()
 
     return redirect('rooms')
+
+
+
