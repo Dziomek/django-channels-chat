@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Room, Message
 from .utils import count_messages
+from annoying.functions import get_object_or_None
 
 
 @login_required
@@ -20,9 +21,9 @@ def rooms(request):
 @login_required
 def room(request, slug):
     room_object = Room.objects.get(slug=slug)
-    messages = Message.objects.filter(room=room_object)
+    message_objects = Message.objects.filter(room=room_object)
 
-    return render(request, 'chat/room.html', {'room': room_object, 'messages': messages})
+    return render(request, 'chat/room.html', {'room': room_object, 'messages': message_objects})
 
 
 @login_required
@@ -55,5 +56,18 @@ def join_room(request, room_name):
         password = request.POST['password']
         if password == room_object.password:
             return redirect('room', slug=room_object.slug)
+        else:
+            messages.info(request, 'Password incorrect. Please try again')
 
     return redirect('enter_room_password', room_name=room_name)
+
+
+@login_required
+def delete_room(request, room_name):
+    user = request.user
+    room_object = get_object_or_None(Room, room_name=room_name)
+    if room_object:
+        if room_object.admin == user:
+            room_object.delete()
+
+    return redirect('rooms')

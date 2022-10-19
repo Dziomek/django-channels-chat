@@ -20,7 +20,8 @@
     <div class="col">
 
         <div class="d-flex justify-content-end align-items-center h-100">
-            <a href="{% url 'logout' %}">
+            <p class="fs-3 fw-bold my-auto">{{ request.user.username }}</p>
+            <a href="{% url 'logout' %}" class="mx-3">
                 <i class="fa-solid fa-right-from-bracket fs-1 me-3"></i>
             </a>
         </div>
