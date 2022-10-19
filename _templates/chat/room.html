@@ -49,7 +49,7 @@
 
     {{ room.slug|json_script:"json-roomname" }}
     {{ request.user.username|json_script:"json-username" }}
-    <script>
+    <script type="text/javascript">
         const roomName = JSON.parse(document.getElementById("json-roomname").textContent)
         const userName = JSON.parse(document.getElementById("json-username").textContent)
 
