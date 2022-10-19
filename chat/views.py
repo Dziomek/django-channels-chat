@@ -65,7 +65,7 @@ def join_room(request, room_name):
 @login_required
 def delete_room(request, room_name):
     user = request.user
-    room_object = get_object_or_None(Room, room_name=room_name)
+    room_object = get_object_or_None(Room,  name=room_name)
     if room_object:
         if room_object.admin == user:
             room_object.delete()

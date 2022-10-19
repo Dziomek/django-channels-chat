@@ -24,11 +24,12 @@
                 {% for room in rooms %}
                 <div class="d-flex flex-row rounded mt-1 mb-1 bg-white align-items-center">
                     <div class="col text-wrap">
-                        <i class="fa-solid fa-house m-0 fs-2 mx-3 text-warning"></i>
-                        <p class="my-auto fs-4 fw-bold text-wrap">{{ room.name }}</p>
-                        {% if room.admin == request.user %}
-                            <i class="fa-solid fa-xmark fs-2 text-danger"></i>
-                        {% endif %}
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <i class="fa-solid fa-house m-0 fs-2 mx-3 text-warning"></i>
+                                <p class="my-auto fs-4 fw-bold text-wrap">{{ room.name }}</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-2">
                         <div class="">
@@ -58,6 +59,11 @@
                           <a href="{% url 'enter_room_password' room.name %}" class="text-decoration-none mx-3">
                              <button class="btn btn-secondary">Join</button>
                           </a>
+                      {% if room.admin == request.user %}
+                                <a href="{% url 'delete_room' room.name %}">
+                                    <i class="fa-solid fa-xmark fs-1 text-danger mx-3"></i>
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
